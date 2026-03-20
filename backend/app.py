@@ -3,7 +3,6 @@ from flask import Flask, jsonify, request
 from flask_cors import CORS
 from datetime import datetime, timedelta
 import logging
-
 from config import Config
 from data.db import SupabaseManager
 from models.prophet_model import ProphetModel
@@ -36,7 +35,6 @@ def create_app():
         region = request.args.get('region', 'NR')
         days = int(request.args.get('days', 7))
         model_type = request.args.get('model', 'prophet')
-
         try:
             if model_type == 'prophet':
                 forecast_df = prophet_wrapper.predict(region, days)
@@ -44,7 +42,6 @@ def create_app():
                 forecast_df = arima_wrapper.predict(region, days)
             else:
                 return jsonify({"error": "Invalid model type"}), 400
-
             return jsonify({
                 "region": region,
                 "horizon": days,
@@ -73,7 +70,6 @@ def create_app():
     def get_comparison():
         region = request.args.get('region', 'NR')
         try:
-            # Mocking metrics
             metrics = {
                 "prophet": {"mae": 3140, "rmse": 4520, "mape": 2.4},
                 "arima": {"mae": 4210, "rmse": 6105, "mape": 4.8}
@@ -84,7 +80,9 @@ def create_app():
 
     return app
 
+
+app = create_app()
+
 if __name__ == "__main__":
-    app.run(debug=False)
     port = int(os.environ.get('PORT', 5000))
-    app.run(host='0.0.0.0', port=port, debug=Config.DEBUG)
+    app.run(host='0.0.0.0', port=port, debug=False)
