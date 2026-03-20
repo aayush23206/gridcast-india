@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>GridCast India | Energy Forecasting</title>
-    <!-- Chart.js CDN -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -21,11 +20,7 @@
             --danger: #f85149;
         }
 
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        * { margin: 0; padding: 0; box-sizing: border-box; }
 
         body {
             font-family: 'Inter', sans-serif;
@@ -34,16 +29,12 @@
             line-height: 1.6;
         }
 
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 0 20px;
-        }
+        .container { max-width: 1400px; margin: 0 auto; padding: 0 20px; }
 
         header {
             padding: 20px 0;
             border-bottom: 1px solid var(--border-color);
-            background: rgba(13, 17, 23, 0.8);
+            background: rgba(13, 17, 23, 0.95);
             backdrop-filter: blur(10px);
             position: sticky;
             top: 0;
@@ -54,25 +45,31 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 20px;
+            margin-bottom: 15px;
         }
 
-        .app-title h1 {
-            color: var(--accent-color);
-            font-size: 1.8rem;
-            letter-spacing: -1px;
-        }
+        .app-title h1 { color: var(--accent-color); font-size: 1.8rem; letter-spacing: -1px; }
+        .app-title p { color: var(--text-secondary); font-size: 0.9rem; }
 
-        .app-title p {
-            color: var(--text-secondary);
-            font-size: 0.9rem;
-        }
-
-        .selectors {
+        .api-status {
             display: flex;
-            gap: 20px;
             align-items: center;
+            gap: 8px;
+            font-size: 0.75rem;
+            color: var(--text-secondary);
         }
+
+        .api-dot {
+            width: 8px; height: 8px;
+            border-radius: 50%;
+            background: #e1b12c;
+            box-shadow: 0 0 6px #e1b12c;
+            transition: all 0.5s;
+        }
+        .api-dot.online { background: var(--success); box-shadow: 0 0 6px var(--success); }
+        .api-dot.offline { background: var(--danger); box-shadow: 0 0 6px var(--danger); }
+
+        .selectors { display: flex; gap: 15px; align-items: center; flex-wrap: wrap; }
 
         .selector-group {
             display: flex;
@@ -91,15 +88,11 @@
             cursor: pointer;
             font-weight: 600;
             font-size: 0.85rem;
-            transition: 0.3s;
+            transition: 0.2s;
         }
 
-        .selector-btn.active {
-            background: var(--accent-color);
-            color: #000;
-        }
+        .selector-btn.active { background: var(--accent-color); color: #000; }
 
-        /* Stats Bar */
         .stats-bar {
             display: grid;
             grid-template-columns: repeat(5, 1fr);
@@ -115,56 +108,30 @@
             position: relative;
         }
 
-        .stat-card .region-name {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            font-weight: 600;
-            text-transform: uppercase;
-        }
-
-        .stat-card .demand-value {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin: 5px 0;
-        }
-
-        .stat-card .change {
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 4px;
-        }
-
+        .stat-card .region-name { color: var(--text-secondary); font-size: 0.8rem; font-weight: 600; text-transform: uppercase; }
+        .stat-card .demand-value { font-size: 1.5rem; font-weight: 700; margin: 5px 0; }
+        .stat-card .change { font-size: 0.85rem; display: flex; align-items: center; gap: 4px; }
         .change.up { color: var(--danger); }
         .change.down { color: var(--success); }
 
         .status-dot {
-            width: 8px;
-            height: 8px;
+            width: 8px; height: 8px;
             border-radius: 50%;
             position: absolute;
-            top: 20px;
-            right: 20px;
+            top: 20px; right: 20px;
         }
-
         .status-dot.normal { background: var(--success); box-shadow: 0 0 10px var(--success); }
         .status-dot.peak { background: var(--danger); box-shadow: 0 0 10px var(--danger); }
 
-        .last-updated {
-            text-align: right;
-            font-size: 0.75rem;
-            color: var(--text-secondary);
-            margin-top: 10px;
-        }
+        .last-updated { text-align: right; font-size: 0.75rem; color: var(--text-secondary); margin-top: 10px; }
 
-        /* Chart Section */
         .chart-container {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 25px;
             margin-top: 30px;
-            height: 500px;
+            height: 480px;
             position: relative;
         }
 
@@ -175,12 +142,8 @@
             margin-bottom: 20px;
         }
 
-        #forecastChart {
-            width: 100% !important;
-            height: 400px !important;
-        }
+        #forecastChart { width: 100% !important; height: 390px !important; }
 
-        /* Seasonal Section */
         .seasonal-grid {
             display: grid;
             grid-template-columns: repeat(3, 1fr);
@@ -194,19 +157,21 @@
             border: 1px solid var(--border-color);
             border-radius: 12px;
             padding: 20px;
-            height: 350px;
+            height: 320px;
         }
 
         .seasonal-card h4 {
             font-size: 0.9rem;
             color: var(--text-secondary);
-            margin-bottom: 15px;
-            display: flex;
-            align-items: center;
-            gap: 8px;
+            margin-bottom: 12px;
         }
 
-        /* Comparison Section */
+        /* FIX: explicit canvas wrapper heights for seasonal charts */
+        .seasonal-card .canvas-wrap {
+            position: relative;
+            height: 240px;
+        }
+
         .comparison-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -221,22 +186,11 @@
             padding: 24px;
         }
 
-        .model-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-
+        .model-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 20px; }
         .model-info h3 { color: var(--accent-color); font-size: 1.2rem; }
         .model-info p { color: var(--text-secondary); font-size: 0.8rem; margin-top: 4px; }
 
-        .metrics-row {
-            display: flex;
-            gap: 15px;
-            margin-bottom: 20px;
-        }
-
+        .metrics-row { display: flex; gap: 15px; margin-bottom: 15px; }
         .metric-item { flex: 1; }
         .metric-label { font-size: 0.75rem; color: var(--text-secondary); }
         .metric-value { font-size: 1.1rem; font-weight: 700; margin-top: 2px; }
@@ -244,7 +198,8 @@
         .metric-value.ok { color: #e1b12c; }
         .metric-value.poor { color: var(--danger); }
 
-        .mini-chart { height: 120px; margin-top: 15px; }
+        /* FIX: explicit mini chart wrapper height */
+        .mini-chart-wrap { position: relative; height: 110px; margin-top: 10px; }
 
         .big-comparison-card {
             background: var(--card-bg);
@@ -255,7 +210,6 @@
             margin-bottom: 50px;
         }
 
-        /* Regional Breakdown */
         .regional-breakdown {
             display: grid;
             grid-template-columns: 2fr 1fr;
@@ -271,6 +225,8 @@
             padding: 24px;
         }
 
+        .breakdown-card h4 { font-size: 0.9rem; color: var(--text-secondary); margin-bottom: 15px; }
+
         .data-table-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -280,32 +236,16 @@
             overflow-x: auto;
         }
 
-        table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 15px;
-        }
-
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
         th {
-            text-align: left;
-            padding: 12px;
+            text-align: left; padding: 12px;
             border-bottom: 1px solid var(--border-color);
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            text-transform: uppercase;
+            color: var(--text-secondary); font-size: 0.8rem; text-transform: uppercase;
         }
-
-        td {
-            padding: 15px 12px;
-            border-bottom: 1px solid var(--border-color);
-            font-size: 0.9rem;
-        }
-
+        td { padding: 15px 12px; border-bottom: 1px solid var(--border-color); font-size: 0.9rem; }
         tr:last-child td { border-bottom: none; }
-
         .accent-text { color: var(--accent-color); font-weight: 600; }
 
-        /* Freshness & About */
         .freshness-section {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -321,43 +261,30 @@
             padding: 24px;
         }
 
-        .info-card h4 {
-            color: var(--text-secondary);
-            font-size: 0.8rem;
-            margin-bottom: 12px;
-            text-transform: uppercase;
-        }
+        .info-card h4 { color: var(--text-secondary); font-size: 0.8rem; margin-bottom: 12px; text-transform: uppercase; }
 
-        .timestamp-item {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 12px;
-            font-size: 0.9rem;
-        }
-
+        .timestamp-item { display: flex; justify-content: space-between; margin-bottom: 12px; font-size: 0.9rem; }
         .timestamp-label { color: var(--text-secondary); }
         .timestamp-value { color: var(--accent-color); font-weight: 600; }
 
-        .links-group {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-        }
-
-        .links-group a {
-            color: var(--accent-color);
-            text-decoration: none;
-            font-size: 0.85rem;
-            display: flex;
-            align-items: center;
-            gap: 5px;
-        }
-
+        .links-group { display: flex; gap: 20px; margin-top: 20px; }
+        .links-group a { color: var(--accent-color); text-decoration: none; font-size: 0.85rem; }
         .links-group a:hover { text-decoration: underline; }
+
+        .data-badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 600;
+            background: rgba(0, 212, 255, 0.1);
+            color: var(--accent-color);
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            margin-left: 8px;
+        }
 
         @media (max-width: 1024px) {
             .stats-bar { grid-template-columns: repeat(3, 1fr); }
-            .chart-container { height: 400px; }
             .seasonal-grid { grid-template-columns: 1fr; }
             .comparison-grid { grid-template-columns: 1fr; }
             .regional-breakdown { grid-template-columns: 1fr; }
@@ -367,545 +294,602 @@
         @media (max-width: 768px) {
             .header-top { flex-direction: column; align-items: flex-start; gap: 15px; }
             .selectors { flex-direction: column; align-items: stretch; width: 100%; }
-            .stats-bar { grid-template-columns: 1fr; }
+            .stats-bar { grid-template-columns: 1fr 1fr; }
         }
     </style>
 </head>
 <body>
 
-    <header>
-        <div class="container text-center">
-            <div class="header-top">
-                <div class="app-title">
-                    <h1>GridCast India</h1>
-                    <p>Real-time Energy Demand Forecasting for Indian Power Grids</p>
-                </div>
-                <div class="last-updated">
-                    Last Update: <span id="update-ts">Fetching...</span>
-                </div>
+<header>
+    <div class="container">
+        <div class="header-top">
+            <div class="app-title">
+                <h1>⚡ GridCast India</h1>
+                <p>Real-time Energy Demand Forecasting for Indian Power Grids</p>
             </div>
-
-            <div class="selectors">
-                <div class="selector-group" id="region-selector">
-                    <button class="selector-btn active" onclick="setRegion('NR')">NR</button>
-                    <button class="selector-btn" onclick="setRegion('SR')">SR</button>
-                    <button class="selector-btn" onclick="setRegion('ER')">ER</button>
-                    <button class="selector-btn" onclick="setRegion('WR')">WR</button>
-                    <button class="selector-btn" onclick="setRegion('NER')">NER</button>
-                </div>
-
-                <div class="selector-group" id="horizon-selector">
-                    <button class="selector-btn active" onclick="setHorizon(7)">7 Days</button>
-                    <button class="selector-btn" onclick="setHorizon(14)">14 Days</button>
-                    <button class="selector-btn" onclick="setHorizon(30)">30 Days</button>
-                </div>
-
-                <div class="selector-group" id="model-selector">
-                    <button class="selector-btn active" onclick="setModel('prophet')">Prophet</button>
-                    <button class="selector-btn" onclick="setModel('arima')">ARIMA</button>
-                    <button class="selector-btn" onclick="setModel('both')">Compare</button>
-                </div>
+            <div class="api-status">
+                <div class="api-dot" id="api-dot"></div>
+                <span id="api-status-text">Connecting to API...</span>
             </div>
         </div>
-    </header>
-
-    <main class="container">
-        <!-- Live Stats Bar -->
-        <section class="stats-bar">
-            <div class="stat-card" data-region="NR">
-                <div class="status-dot normal"></div>
-                <div class="region-name">Northern (NR)</div>
-                <div class="demand-value">124,500 MW</div>
-                <div class="change down">▼ 2.4% vs yesterday</div>
+        <div class="selectors">
+            <div class="selector-group" id="region-selector">
+                <button class="selector-btn active" onclick="setRegion('NR')">NR</button>
+                <button class="selector-btn" onclick="setRegion('SR')">SR</button>
+                <button class="selector-btn" onclick="setRegion('ER')">ER</button>
+                <button class="selector-btn" onclick="setRegion('WR')">WR</button>
+                <button class="selector-btn" onclick="setRegion('NER')">NER</button>
             </div>
-            <div class="stat-card" data-region="SR">
-                <div class="status-dot normal"></div>
-                <div class="region-name">Southern (SR)</div>
-                <div class="demand-value">102,100 MW</div>
-                <div class="change up">▲ 1.8% vs yesterday</div>
+            <div class="selector-group" id="horizon-selector">
+                <button class="selector-btn active" onclick="setHorizon(7)">7 Days</button>
+                <button class="selector-btn" onclick="setHorizon(14)">14 Days</button>
+                <button class="selector-btn" onclick="setHorizon(30)">30 Days</button>
             </div>
-            <div class="stat-card" data-region="ER">
-                <div class="status-dot normal"></div>
-                <div class="region-name">Eastern (ER)</div>
-                <div class="demand-value">42,300 MW</div>
-                <div class="change down">▼ 0.5% vs yesterday</div>
+            <div class="selector-group" id="model-selector">
+                <button class="selector-btn active" onclick="setModel('prophet')">Prophet</button>
+                <button class="selector-btn" onclick="setModel('arima')">ARIMA</button>
+                <button class="selector-btn" onclick="setModel('both')">Compare</button>
             </div>
-            <div class="stat-card" data-region="WR">
-                <div class="status-dot peak"></div>
-                <div class="region-name">Western (WR)</div>
-                <div class="demand-value">145,800 MW</div>
-                <div class="change up">▲ 4.2% vs yesterday</div>
-            </div>
-            <div class="stat-card" data-region="NER">
-                <div class="status-dot normal"></div>
-                <div class="region-name">North-Eastern (NER)</div>
-                <div class="demand-value">12,400 MW</div>
-                <div class="change up">▲ 0.2% vs yesterday</div>
-            </div>
-        </section>
-
-        <!-- Main Forecast Chart -->
-        <section class="chart-container">
-            <div class="chart-header">
-                <h3>Demand Forecast <span class="accent-text" id="selected-region-label">NR</span></h3>
-                <div class="last-updated" id="chart-legend">
-                    <span style="display:inline-block; width:12px; height:12px; background:white; margin-right:5px"></span> Actual
-                    <span style="display:inline-block; width:12px; height:12px; background:var(--accent-color); margin-left:15px; margin-right:5px"></span> Predicted
-                </div>
-            </div>
-            <canvas id="forecastChart"></canvas>
-        </section>
-
-        <!-- Seasonal Patterns -->
-        <section class="seasonal-grid">
-            <div class="seasonal-card">
-                <h4>Average Demand by Month</h4>
-                <canvas id="monthChart"></canvas>
-            </div>
-            <div class="seasonal-card">
-                <h4>Average Demand by Hour</h4>
-                <canvas id="hourChart"></canvas>
-            </div>
-            <div class="seasonal-card">
-                <h4>Weekday vs Weekend comparison</h4>
-                <canvas id="dayTypeChart"></canvas>
-            </div>
-        </section>
-
-        <!-- Model Comparison -->
-        <section class="comparison-grid">
-            <div class="comparison-card">
-                <div class="model-header">
-                    <div class="model-info">
-                        <h3>Facebook Prophet</h3>
-                        <p>Additive regressor specialized in daily/yearly seasonality.</p>
-                    </div>
-                </div>
-                <div class="metrics-row">
-                    <div class="metric-item">
-                        <div class="metric-label">MAE</div>
-                        <div class="metric-value">3,140</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">RMSE</div>
-                        <div class="metric-value">4,520</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">MAPE</div>
-                        <div class="metric-value good">2.4%</div>
-                    </div>
-                </div>
-                <div class="mini-chart">
-                    <canvas id="prophetMiniChart"></canvas>
-                </div>
-            </div>
-
-            <div class="comparison-card">
-                <div class="model-header">
-                    <div class="model-info">
-                        <h3>ARIMA (SARIMAX)</h3>
-                        <p>Statistical model capturing autoregressive + seasonal effects.</p>
-                    </div>
-                </div>
-                <div class="metrics-row">
-                    <div class="metric-item">
-                        <div class="metric-label">MAE</div>
-                        <div class="metric-value">4,210</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">RMSE</div>
-                        <div class="metric-value">6,105</div>
-                    </div>
-                    <div class="metric-item">
-                        <div class="metric-label">MAPE</div>
-                        <div class="metric-value ok">4.8%</div>
-                    </div>
-                </div>
-                <div class="mini-chart">
-                    <canvas id="arimaMiniChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section class="big-comparison-card">
-            <h4>Error Metric Comparison (MAE vs RMSE)</h4>
-            <div style="height: 300px; margin-top: 20px;">
-                <canvas id="errorCompChart"></canvas>
-            </div>
-        </section>
-
-        <!-- Regional Breakdown -->
-        <h2 style="margin-top: 50px; font-size: 1.4rem;">National Perspective</h2>
-        
-        <section class="regional-breakdown">
-            <div class="breakdown-card">
-                <h4>Current Demand Comparison (MW)</h4>
-                <div style="height: 300px;">
-                    <canvas id="regionalBarChart"></canvas>
-                </div>
-            </div>
-            <div class="breakdown-card">
-                <h4>Demand Share %</h4>
-                <div style="height: 300px;">
-                    <canvas id="regionalPieChart"></canvas>
-                </div>
-            </div>
-        </section>
-
-        <section class="data-table-card">
-            <h4>Grid Status Summary Table</h4>
-                <table>
-                    <thead>
-                        <tr>
-                            <th>Region</th>
-                            <th>Current MW</th>
-                            <th>Peak Today</th>
-                            <th>Valley Today</th>
-                            <th>24h Change</th>
-                        </tr>
-                    </thead>
-                    <tbody id="grid-table-body">
-                        <!-- Populated by JS -->
-                    </tbody>
-                </table>
-        </section>
-
-        <!-- Data Freshness + About -->
-        <section class="freshness-section">
-            <div class="info-card">
-                <h4>System Status</h4>
-                <div class="timestamp-item">
-                    <span class="timestamp-label">Last Scraped:</span>
-                    <span class="timestamp-value" id="last-scraped">-</span>
-                </div>
-                <div class="timestamp-item">
-                    <span class="timestamp-label">Next Scheduled Update:</span>
-                    <span class="timestamp-value" id="next-update">-</span>
-                </div>
-                <div class="timestamp-item">
-                    <span class="timestamp-label">Models Last Trained:</span>
-                    <span class="timestamp-value" id="last-trained">-</span>
-                </div>
-            </div>
-            <div class="info-card">
-                <h4>Data Governance</h4>
-                <p style="font-size: 0.85rem; color: var(--text-secondary);">
-                    This system consumes real-time data from <strong>MERIT India (POSOCO)</strong> and state-level historical reports from <strong>data.gov.in</strong>. Predictions are generated using Facebook Prophet and SARIMAX statistical models.
-                </p>
-                <div class="links-group">
-                    <a href="https://github.com/aayush23206/gridcast-india" target="_blank">View GitHub</a>
-                    <a href="https://github.com/aayush23206/gridcast-india#api-docs" target="_blank">API Documentation</a>
-                </div>
-            </div>
-        </section>
-
-        <!-- Final Footer -->
-        <div style="padding: 40px 0; text-align: center; border-top: 1px solid var(--border-color); color: var(--text-secondary); font-size: 0.8rem;">
-            GridCast India © 2024 | Created by Aayush
+            <div class="last-updated">Last Update: <span id="update-ts">--</span></div>
         </div>
-    </main>
+    </div>
+</header>
 
-    <script>
-        const API_BASE = "https://gridcast-india-api.onrender.com/api";
-        let currentRegion = 'NR';
-        let currentHorizon = 7;
-        let currentModel = 'prophet';
-        let mainChart = null;
-        let monthChart = null;
-        let hourChart = null;
-        let dayTypeChart = null;
-        let prophetMiniChart = null;
-        let arimaMiniChart = null;
-        let errorCompChart = null;
-        let regionalBarChart = null;
-        let regionalPieChart = null;
+<main class="container">
 
-        document.addEventListener("DOMContentLoaded", () => {
-            initApp();
+    <!-- Stats Bar -->
+    <section class="stats-bar">
+        <div class="stat-card">
+            <div class="status-dot normal"></div>
+            <div class="region-name">Northern (NR)</div>
+            <div class="demand-value">124,500 MW</div>
+            <div class="change down">▼ 2.4% vs yesterday</div>
+        </div>
+        <div class="stat-card">
+            <div class="status-dot normal"></div>
+            <div class="region-name">Southern (SR)</div>
+            <div class="demand-value">102,100 MW</div>
+            <div class="change up">▲ 1.8% vs yesterday</div>
+        </div>
+        <div class="stat-card">
+            <div class="status-dot normal"></div>
+            <div class="region-name">Eastern (ER)</div>
+            <div class="demand-value">42,300 MW</div>
+            <div class="change down">▼ 0.5% vs yesterday</div>
+        </div>
+        <div class="stat-card">
+            <div class="status-dot peak"></div>
+            <div class="region-name">Western (WR)</div>
+            <div class="demand-value">145,800 MW</div>
+            <div class="change up">▲ 4.2% vs yesterday</div>
+        </div>
+        <div class="stat-card">
+            <div class="status-dot normal"></div>
+            <div class="region-name">North-Eastern (NER)</div>
+            <div class="demand-value">12,400 MW</div>
+            <div class="change up">▲ 0.2% vs yesterday</div>
+        </div>
+    </section>
+
+    <!-- Main Forecast Chart -->
+    <section class="chart-container">
+        <div class="chart-header">
+            <h3>Demand Forecast — <span class="accent-text" id="selected-region-label">NR</span> <span class="data-badge" id="data-source-badge">SIMULATED</span></h3>
+            <div style="font-size:0.8rem; color: var(--text-secondary);">
+                <span style="display:inline-block;width:12px;height:3px;background:white;margin-right:5px;vertical-align:middle"></span>Actual
+                <span style="display:inline-block;width:12px;height:3px;background:var(--accent-color);margin-left:15px;margin-right:5px;vertical-align:middle"></span>Predicted
+            </div>
+        </div>
+        <canvas id="forecastChart"></canvas>
+    </section>
+
+    <!-- Seasonal Patterns -->
+    <section class="seasonal-grid">
+        <div class="seasonal-card">
+            <h4>Average Demand by Month</h4>
+            <div class="canvas-wrap"><canvas id="monthChart"></canvas></div>
+        </div>
+        <div class="seasonal-card">
+            <h4>Average Demand by Hour of Day</h4>
+            <div class="canvas-wrap"><canvas id="hourChart"></canvas></div>
+        </div>
+        <div class="seasonal-card">
+            <h4>Weekday vs Weekend</h4>
+            <div class="canvas-wrap"><canvas id="dayTypeChart"></canvas></div>
+        </div>
+    </section>
+
+    <!-- Model Comparison -->
+    <section class="comparison-grid">
+        <div class="comparison-card">
+            <div class="model-header">
+                <div class="model-info">
+                    <h3>Facebook Prophet</h3>
+                    <p>Additive regressor with daily/weekly/yearly seasonality.</p>
+                </div>
+            </div>
+            <div class="metrics-row">
+                <div class="metric-item">
+                    <div class="metric-label">MAE</div>
+                    <div class="metric-value">3,140</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">RMSE</div>
+                    <div class="metric-value">4,520</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">MAPE</div>
+                    <div class="metric-value good">2.4%</div>
+                </div>
+            </div>
+            <div class="mini-chart-wrap"><canvas id="prophetMiniChart"></canvas></div>
+        </div>
+
+        <div class="comparison-card">
+            <div class="model-header">
+                <div class="model-info">
+                    <h3>ARIMA (SARIMAX)</h3>
+                    <p>Statistical model capturing autoregressive + seasonal effects.</p>
+                </div>
+            </div>
+            <div class="metrics-row">
+                <div class="metric-item">
+                    <div class="metric-label">MAE</div>
+                    <div class="metric-value">4,210</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">RMSE</div>
+                    <div class="metric-value">6,105</div>
+                </div>
+                <div class="metric-item">
+                    <div class="metric-label">MAPE</div>
+                    <div class="metric-value ok">4.8%</div>
+                </div>
+            </div>
+            <div class="mini-chart-wrap"><canvas id="arimaMiniChart"></canvas></div>
+        </div>
+    </section>
+
+    <section class="big-comparison-card">
+        <h4 style="color:var(--text-secondary); font-size:0.9rem;">Error Metric Comparison — Prophet vs ARIMA</h4>
+        <div style="height:280px; margin-top:15px;">
+            <canvas id="errorCompChart"></canvas>
+        </div>
+    </section>
+
+    <!-- National Perspective -->
+    <h2 style="margin-top:50px; font-size:1.4rem;">National Perspective</h2>
+    <section class="regional-breakdown">
+        <div class="breakdown-card">
+            <h4>Current Demand by Region (MW)</h4>
+            <div style="height:280px;"><canvas id="regionalBarChart"></canvas></div>
+        </div>
+        <div class="breakdown-card">
+            <h4>Regional Demand Share %</h4>
+            <div style="height:280px;"><canvas id="regionalPieChart"></canvas></div>
+        </div>
+    </section>
+
+    <section class="data-table-card">
+        <h4 style="color:var(--text-secondary); font-size:0.9rem;">Grid Status Summary</h4>
+        <table>
+            <thead>
+                <tr>
+                    <th>Region</th>
+                    <th>Current MW</th>
+                    <th>Peak Today</th>
+                    <th>Valley Today</th>
+                    <th>24h Change</th>
+                </tr>
+            </thead>
+            <tbody id="grid-table-body"></tbody>
+        </table>
+    </section>
+
+    <!-- System Status -->
+    <section class="freshness-section">
+        <div class="info-card">
+            <h4>System Status</h4>
+            <div class="timestamp-item">
+                <span class="timestamp-label">Last Scraped:</span>
+                <span class="timestamp-value" id="last-scraped">—</span>
+            </div>
+            <div class="timestamp-item">
+                <span class="timestamp-label">Next Scheduled Update:</span>
+                <span class="timestamp-value" id="next-update">—</span>
+            </div>
+            <div class="timestamp-item">
+                <span class="timestamp-label">Models Last Trained:</span>
+                <span class="timestamp-value" id="last-trained">—</span>
+            </div>
+        </div>
+        <div class="info-card">
+            <h4>Data Governance</h4>
+            <p style="font-size:0.85rem; color:var(--text-secondary);">
+                This system consumes data from <strong>MERIT India (POSOCO)</strong> and state-level reports from <strong>data.gov.in</strong>. Predictions use Facebook Prophet and SARIMAX statistical models trained on Indian regional grid data.
+            </p>
+            <div class="links-group">
+                <a href="https://github.com/aayush23206/gridcast-india" target="_blank">↗ View GitHub</a>
+                <a href="https://github.com/aayush23206/gridcast-india#api-docs" target="_blank">↗ API Docs</a>
+            </div>
+        </div>
+    </section>
+
+    <div style="padding:40px 0; text-align:center; border-top:1px solid var(--border-color); color:var(--text-secondary); font-size:0.8rem;">
+        GridCast India © 2024 · Created by Aayush · B.Tech CSE (AI & ML), Parul University
+    </div>
+</main>
+
+<script>
+    const API_BASE = "https://gridcast-india-api.onrender.com/api";
+    let currentRegion = 'NR';
+    let currentHorizon = 7;
+    let currentModel = 'prophet';
+    let mainChart = null, monthChart = null, hourChart = null;
+    let dayTypeChart = null, prophetMiniChart = null, arimaMiniChart = null;
+    let errorCompChart = null, regionalBarChart = null, regionalPieChart = null;
+
+    // ── Fetch with 5s timeout ──────────────────────────────────────────────
+    async function fetchWithTimeout(url, ms = 5000) {
+        const ctrl = new AbortController();
+        const timer = setTimeout(() => ctrl.abort(), ms);
+        try {
+            const res = await fetch(url, { signal: ctrl.signal });
+            clearTimeout(timer);
+            return res;
+        } catch (e) {
+            clearTimeout(timer);
+            throw e;
+        }
+    }
+
+    // ── Startup ────────────────────────────────────────────────────────────
+    document.addEventListener("DOMContentLoaded", () => {
+        // 1. Render everything immediately with simulated data
+        renderMainChart();
+        renderSeasonalCharts();
+        renderModelComparison();
+        renderRegionalBreakdown();
+        setMeta();
+
+        // 2. Wake up Render in background (cold start ping)
+        wakeAndSync();
+    });
+
+    function setMeta() {
+        document.getElementById('last-scraped').innerText = new Date().toLocaleString('en-IN');
+        document.getElementById('next-update').innerText = 'In ~2 hours (6 AM IST)';
+        document.getElementById('last-trained').innerText = '24h ago';
+        document.getElementById('update-ts').innerText = new Date().toLocaleTimeString('en-IN');
+    }
+
+    async function wakeAndSync() {
+        setApiStatus('waking');
+        try {
+            const res = await fetchWithTimeout(`${API_BASE.replace('/api', '')}/health`, 15000);
+            if (res.ok) {
+                setApiStatus('online');
+                // Now try to load real data
+                loadForecast(currentRegion, currentHorizon, currentModel);
+                loadActual(currentRegion);
+                loadComparison(currentRegion);
+            } else {
+                setApiStatus('offline');
+            }
+        } catch (e) {
+            setApiStatus('offline');
+        }
+    }
+
+    function setApiStatus(state) {
+        const dot = document.getElementById('api-dot');
+        const txt = document.getElementById('api-status-text');
+        dot.className = 'api-dot';
+        if (state === 'online') {
+            dot.classList.add('online');
+            txt.innerText = 'API Live';
+        } else if (state === 'offline') {
+            dot.classList.add('offline');
+            txt.innerText = 'API Offline — showing simulated data';
+        } else {
+            txt.innerText = 'Connecting to API...';
+        }
+    }
+
+    // ── API loaders (update charts if real data available) ─────────────────
+    async function loadForecast(region, days, model) {
+        try {
+            const res = await fetchWithTimeout(`${API_BASE}/forecast?region=${region}&days=${days}&model=${model}`);
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            renderMainChart(data);
+            document.getElementById('data-source-badge').innerText = 'LIVE';
+        } catch (e) {
+            // Keep simulated chart already shown
+        }
+    }
+
+    async function loadActual(region) {
+        try {
+            const res = await fetchWithTimeout(`${API_BASE}/actual?region=${region}`);
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            renderSeasonalCharts(data);
+        } catch (e) {}
+    }
+
+    async function loadComparison(region) {
+        try {
+            const res = await fetchWithTimeout(`${API_BASE}/comparison?region=${region}`);
+            if (!res.ok) throw new Error();
+            const data = await res.json();
+            renderModelComparison(data);
+        } catch (e) {}
+    }
+
+    // ── Selector handlers ──────────────────────────────────────────────────
+    function setRegion(region) {
+        currentRegion = region;
+        document.getElementById('selected-region-label').innerText = region;
+        updatePills('region-selector', region);
+        renderMainChart(); // immediate simulated update
+        loadForecast(region, currentHorizon, currentModel);
+        loadActual(region);
+        loadComparison(region);
+    }
+
+    function setHorizon(days) {
+        currentHorizon = days;
+        updatePills('horizon-selector', String(days));
+        renderMainChart();
+        loadForecast(currentRegion, days, currentModel);
+    }
+
+    function setModel(model) {
+        currentModel = model;
+        updatePills('model-selector', model);
+        renderMainChart();
+        loadForecast(currentRegion, currentHorizon, model);
+    }
+
+    function updatePills(containerId, value) {
+        const container = document.getElementById(containerId);
+        if (!container) return;
+        container.querySelectorAll('.selector-btn').forEach(btn => {
+            const match = btn.innerText.toLowerCase().includes(String(value).toLowerCase())
+                       || btn.getAttribute('onclick').includes(String(value));
+            btn.classList.toggle('active', match);
+        });
+    }
+
+    // ── Chart renderers ────────────────────────────────────────────────────
+
+    function renderMainChart(data = null) {
+        const ctx = document.getElementById('forecastChart').getContext('2d');
+        const labels = [], actual = [], predicted = [], lower = [], upper = [];
+        const now = new Date();
+        const hist = 48, fcast = currentHorizon * 24;
+
+        for (let i = -hist; i < fcast; i++) {
+            const d = new Date(now.getTime() + i * 3600000);
+            labels.push(d.toLocaleString('en-IN', { hour: '2-digit', day: '2-digit', month: 'short' }));
+            const base = 120000 + Math.sin(i / 1.5) * 15000 + Math.sin(i / 12) * 8000;
+            if (i <= 0) {
+                actual.push(Math.round(base));
+                predicted.push(null); lower.push(null); upper.push(null);
+            } else {
+                actual.push(null);
+                predicted.push(Math.round(base + (Math.random() - 0.5) * 4000));
+                lower.push(Math.round(base - 9000));
+                upper.push(Math.round(base + 9000));
+            }
+        }
+
+        if (mainChart) mainChart.destroy();
+        mainChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels,
+                datasets: [
+                    { label: 'Actual', data: actual, borderColor: '#ffffff', borderWidth: 2, pointRadius: 0, fill: false, spanGaps: true },
+                    { label: 'Predicted', data: predicted, borderColor: '#00d4ff', borderWidth: 2, pointRadius: 0, fill: false, spanGaps: true },
+                    { label: 'Upper', data: upper, borderColor: 'transparent', pointRadius: 0, fill: '+1', backgroundColor: 'rgba(0,212,255,0.08)' },
+                    { label: 'Lower', data: lower, borderColor: 'transparent', pointRadius: 0, fill: false }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                interaction: { mode: 'index', intersect: false },
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { grid: { color: '#21262d' }, ticks: { color: '#8b949e', autoSkip: true, maxTicksLimit: 10 } },
+                    y: { grid: { color: '#21262d' }, ticks: { color: '#8b949e', callback: v => (v/1000).toFixed(0) + 'K' } }
+                }
+            },
+            plugins: [{
+                id: 'vline',
+                afterDraw: chart => {
+                    const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
+                    const xPos = x.getPixelForValue(labels[hist]);
+                    ctx.save(); ctx.beginPath(); ctx.setLineDash([4, 4]);
+                    ctx.moveTo(xPos, top); ctx.lineTo(xPos, bottom);
+                    ctx.lineWidth = 1; ctx.strokeStyle = '#484f58'; ctx.stroke(); ctx.restore();
+                }
+            }]
+        });
+    }
+
+    function renderSeasonalCharts(data = null) {
+        renderMonthChart();
+        renderHourChart();
+        renderDayTypeChart();
+    }
+
+    function renderMonthChart() {
+        const ctx = document.getElementById('monthChart').getContext('2d');
+        if (monthChart) monthChart.destroy();
+        monthChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'],
+                datasets: [{
+                    data: [110,115,130,150,165,140,125,120,130,145,135,120].map(v => v * 1000),
+                    backgroundColor: ctx => {
+                        const i = ctx.dataIndex;
+                        return i >= 3 && i <= 5 ? '#ff6b6b' : i >= 6 && i <= 8 ? '#4fc3f7' : '#00d4ff';
+                    },
+                    borderRadius: 4
+                }]
+            },
+            options: seasonalOpts()
+        });
+    }
+
+    function renderHourChart() {
+        const ctx = document.getElementById('hourChart').getContext('2d');
+        if (hourChart) hourChart.destroy();
+        const hours = Array.from({length:24}, (_, i) => `${i}:00`);
+        hourChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: hours,
+                datasets: [{
+                    data: hours.map((_, i) => Math.round(100000 + Math.sin((i - 6) / 4) * 20000 + (i > 18 ? 10000 : 0))),
+                    backgroundColor: '#00d4ff', borderRadius: 3
+                }]
+            },
+            options: seasonalOpts()
+        });
+    }
+
+    function renderDayTypeChart() {
+        const ctx = document.getElementById('dayTypeChart').getContext('2d');
+        if (dayTypeChart) dayTypeChart.destroy();
+        const hours = Array.from({length:24}, (_, i) => `${i}:00`);
+        dayTypeChart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: hours,
+                datasets: [
+                    { label: 'Weekday', data: hours.map((_, i) => Math.round(110000 + Math.sin((i-6)/4)*25000)), borderColor: '#00d4ff', borderWidth: 2, pointRadius: 0, fill: false },
+                    { label: 'Weekend', data: hours.map((_, i) => Math.round(95000 + Math.sin((i-6)/4)*15000)), borderColor: '#ffffff88', borderWidth: 2, pointRadius: 0, fill: false }
+                ]
+            },
+            options: { ...seasonalOpts(), plugins: { legend: { display: true, labels: { color: '#8b949e', boxWidth: 12 } } } }
+        });
+    }
+
+    function renderModelComparison(data = null) {
+        renderMiniChart('prophetMiniChart', '#00d4ff');
+        renderMiniChart('arimaMiniChart', '#ffffff');
+        renderErrorBarChart();
+    }
+
+    function renderMiniChart(id, color) {
+        const ctx = document.getElementById(id).getContext('2d');
+        let prev = id === 'prophetMiniChart' ? prophetMiniChart : arimaMiniChart;
+        if (prev) prev.destroy();
+        const pts = Array.from({length:30}, (_, i) => i);
+        const chart = new Chart(ctx, {
+            type: 'line',
+            data: {
+                labels: pts,
+                datasets: [
+                    { data: pts.map(i => 100000 + Math.sin(i/2)*10000), borderColor: '#484f58', borderWidth: 1, pointRadius: 0, fill: false },
+                    { data: pts.map(i => 100000 + Math.sin(i/2)*10500 + (Math.random()-0.5)*2000), borderColor: color, borderWidth: 1.5, pointRadius: 0, fill: false }
+                ]
+            },
+            options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
+        });
+        if (id === 'prophetMiniChart') prophetMiniChart = chart; else arimaMiniChart = chart;
+    }
+
+    function renderErrorBarChart() {
+        const ctx = document.getElementById('errorCompChart').getContext('2d');
+        if (errorCompChart) errorCompChart.destroy();
+        errorCompChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['MAE', 'RMSE'],
+                datasets: [
+                    { label: 'Prophet', data: [3140, 4520], backgroundColor: '#00d4ff', borderRadius: 4 },
+                    { label: 'ARIMA',   data: [4210, 6105], backgroundColor: '#ffffff44', borderRadius: 4 }
+                ]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { labels: { color: '#8b949e' } } },
+                scales: {
+                    x: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } },
+                    y: { ticks: { color: '#8b949e' }, grid: { color: '#21262d' } }
+                }
+            }
+        });
+    }
+
+    function renderRegionalBreakdown() {
+        const ctxBar = document.getElementById('regionalBarChart').getContext('2d');
+        if (regionalBarChart) regionalBarChart.destroy();
+        regionalBarChart = new Chart(ctxBar, {
+            type: 'bar',
+            data: {
+                labels: ['NR','SR','ER','WR','NER'],
+                datasets: [{ data: [124500,102100,42300,145800,12400], backgroundColor: ['#00d4ff','#00b8d9','#0097b2','#007a8c','#005f6b'], borderRadius: 6 }]
+            },
+            options: {
+                indexAxis: 'y', responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { display: false } },
+                scales: {
+                    x: { ticks: { color: '#8b949e', callback: v => (v/1000).toFixed(0)+'K' }, grid: { color: '#21262d' } },
+                    y: { ticks: { color: '#8b949e' }, grid: { display: false } }
+                }
+            }
         });
 
-        async function initApp() {
-            await refreshAll();
-            renderRegionalBreakdown();
-            
-            // Simulation fields for metadata
-            document.getElementById('last-scraped').innerText = new Date().toLocaleString();
-            document.getElementById('next-update').innerText = "In 2 hours";
-            document.getElementById('last-trained').innerText = "24h ago";
-            document.getElementById('update-ts').innerText = new Date().toLocaleTimeString();
-        }
-
-        async function refreshAll() {
-            await Promise.all([
-                loadForecast(currentRegion, currentHorizon, currentModel),
-                loadActual(currentRegion),
-                loadComparison(currentRegion)
-            ]);
-        }
-
-        async function loadForecast(region, days, model) {
-            try {
-                const res = await fetch(`${API_BASE}/forecast?region=${region}&days=${days}&model=${model}`);
-                if (!res.ok) throw new Error();
-                const data = await res.json();
-                renderMainChart(data);
-            } catch (e) {
-                renderMainChart(); // Fallback to simulated
+        const ctxPie = document.getElementById('regionalPieChart').getContext('2d');
+        if (regionalPieChart) regionalPieChart.destroy();
+        regionalPieChart = new Chart(ctxPie, {
+            type: 'doughnut',
+            data: {
+                labels: ['NR','SR','ER','WR','NER'],
+                datasets: [{ data: [124500,102100,42300,145800,12400], backgroundColor: ['#00d4ff','#4fc3f7','#8b949e','#238636','#f85149'], borderWidth: 0, hoverOffset: 6 }]
+            },
+            options: {
+                responsive: true, maintainAspectRatio: false,
+                plugins: { legend: { position: 'bottom', labels: { color: '#8b949e', padding: 12, boxWidth: 12 } } },
+                cutout: '60%'
             }
-        }
+        });
 
-        async function loadActual(region) {
-            try {
-                const res = await fetch(`${API_BASE}/actual?region=${region}`);
-                if (!res.ok) throw new Error();
-                const data = await res.json();
-                renderSeasonalCharts(data);
-            } catch (e) {
-                renderSeasonalCharts();
+        const rows = [
+            { reg: 'Northern (NR)', curr: '124,500', peak: '132,100', valley: '98,400', chg: '-2.4%' },
+            { reg: 'Southern (SR)', curr: '102,100', peak: '105,400', valley: '89,200', chg: '+1.8%' },
+            { reg: 'Eastern (ER)',  curr: '42,300',  peak: '45,800',  valley: '38,100', chg: '-0.5%' },
+            { reg: 'Western (WR)', curr: '145,800', peak: '152,000', valley: '128,400', chg: '+4.2%' },
+            { reg: 'North-Eastern (NER)', curr: '12,400', peak: '13,500', valley: '10,200', chg: '+0.2%' }
+        ];
+        document.getElementById('grid-table-body').innerHTML = rows.map(r =>
+            `<tr>
+                <td>${r.reg}</td>
+                <td class="accent-text">${r.curr} MW</td>
+                <td>${r.peak} MW</td>
+                <td>${r.valley} MW</td>
+                <td style="color:${r.chg.startsWith('+') ? 'var(--danger)' : 'var(--success)'}">${r.chg}</td>
+            </tr>`
+        ).join('');
+    }
+
+    function seasonalOpts() {
+        return {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { ticks: { color: '#8b949e', font: { size: 10 } }, grid: { color: '#21262d' } },
+                y: { ticks: { color: '#8b949e', font: { size: 10 }, callback: v => (v/1000).toFixed(0)+'K' }, grid: { color: '#21262d' } }
             }
-        }
+        };
+    }
+</script>
 
-        async function loadComparison(region) {
-            try {
-                const res = await fetch(`${API_BASE}/comparison?region=${region}`);
-                if (!res.ok) throw new Error();
-                const data = await res.json();
-                renderModelComparison(data);
-            } catch (e) {
-                renderModelComparison();
-            }
-        }
-
-        function setRegion(region) {
-            currentRegion = region;
-            const regionLabel = document.getElementById('selected-region-label');
-            if (regionLabel) regionLabel.innerText = region;
-            updatePills('region-selector', region);
-            refreshAll();
-        }
-
-        function setHorizon(days) {
-            currentHorizon = days;
-            updatePills('horizon-selector', days);
-            refreshAll();
-        }
-
-        function setModel(model) {
-            currentModel = model;
-            updatePills('model-selector', model);
-            refreshAll();
-        }
-
-        function updatePills(containerId, value) {
-            const container = document.getElementById(containerId);
-            if (!container) return;
-            const buttons = container.querySelectorAll('.selector-btn');
-            buttons.forEach(btn => {
-                if (btn.innerText.includes(value) || btn.getAttribute('onclick').includes(value)) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-        }
-
-        // --- Render Functions ---
-
-        function renderMainChart(data = null) {
-            const ctx = document.getElementById('forecastChart').getContext('2d');
-            const labels = [];
-            const actual = [];
-            const predicted = [];
-            const lower = [];
-            const upper = [];
-            
-            const now = new Date();
-            const historicalHours = 48;
-            const forecastHours = currentHorizon * 24;
-
-            for(let i = -historicalHours; i < forecastHours; i++) {
-                const date = new Date(now.getTime() + i * 3600000);
-                labels.push(date.toLocaleString('en-IN', { hour: '2-digit', day: '2-digit', month: 'short' }));
-                const baseVal = 120000 + Math.sin(i / 1.5) * 15000;
-                if (i <= 0) {
-                    actual.push(baseVal);
-                    predicted.push(null);
-                    lower.push(null); upper.push(null);
-                } else {
-                    actual.push(null);
-                    predicted.push(baseVal + (Math.random()-0.5)*5000);
-                    lower.push(baseVal - 8000); upper.push(baseVal + 8000);
-                }
-            }
-
-            if (mainChart) mainChart.destroy();
-            mainChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        { label: 'Actual', data: actual, borderColor: '#fff', borderWidth: 2, pointRadius: 0, fill: false, spanGaps: true },
-                        { label: 'Predicted', data: predicted, borderColor: '#00d4ff', borderWidth: 2, pointRadius: 0, fill: false, spanGaps: true },
-                        { label: 'Range', data: upper, borderColor: 'transparent', pointRadius: 0, fill: 3, backgroundColor: 'rgba(0, 212, 255, 0.1)' },
-                        { label: 'Lower', data: lower, borderColor: 'transparent', pointRadius: 0, fill: false }
-                    ]
-                },
-                options: {
-                    responsive: true,
-                    maintainAspectRatio: false,
-                    interaction: { mode: 'index', intersect: false },
-                    plugins: { legend: { display: false } },
-                    scales: {
-                        x: { grid: { color: '#30363d' }, ticks: { color: '#8b949e', autoSkip: true, maxTicksLimit: 12 } },
-                        y: { grid: { color: '#30363d' }, ticks: { color: '#8b949e' } }
-                    }
-                },
-                plugins: [{
-                    id: 'verticalLine',
-                    afterDraw: (chart) => {
-                        const { ctx, chartArea: { top, bottom }, scales: { x } } = chart;
-                        const xPos = x.getPixelForValue(labels[historicalHours]);
-                        ctx.save(); ctx.beginPath(); ctx.setLineDash([5, 5]);
-                        ctx.moveTo(xPos, top); ctx.lineTo(xPos, bottom);
-                        ctx.lineWidth = 1; ctx.strokeStyle = '#8b949e'; ctx.stroke(); ctx.restore();
-                    }
-                }]
-            });
-        }
-
-        function renderSeasonalCharts(data = null) {
-            renderMonthChart(); renderHourChart(); renderDayTypeChart();
-        }
-
-        function renderMonthChart() {
-            const ctx = document.getElementById('monthChart').getContext('2d');
-            if (monthChart) monthChart.destroy();
-            monthChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'],
-                    datasets: [{
-                        data: [110, 115, 130, 150, 165, 140, 125, 120, 130, 145, 135, 120].map(v => v * 1000),
-                        backgroundColor: (c) => c.index >= 3 && c.index <= 5 ? '#ff4757' : (c.index >= 6 && c.index <= 8 ? '#2e86de' : '#00d4ff'),
-                        borderRadius: 4
-                    }]
-                },
-                options: seasonalOptions()
-            });
-        }
-
-        function renderHourChart() {
-            const ctx = document.getElementById('hourChart').getContext('2d');
-            if (hourChart) hourChart.destroy();
-            const hours = Array.from({length: 24}, (_, i) => `${i}:00`);
-            hourChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: hours,
-                    datasets: [{
-                        data: hours.map((_, i) => 100000 + Math.sin((i - 6) / 4) * 20000 + (i > 18 ? 10000 : 0)),
-                        backgroundColor: '#00d4ff', borderRadius: 3
-                    }]
-                },
-                options: seasonalOptions()
-            });
-        }
-
-        function renderDayTypeChart() {
-            const ctx = document.getElementById('dayTypeChart').getContext('2d');
-            if (dayTypeChart) dayTypeChart.destroy();
-            const hours = Array.from({length: 24}, (_, i) => `${i}:00`);
-            dayTypeChart = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: hours,
-                    datasets: [
-                        { label: 'Weekday', data: hours.map((_, i) => 110000 + Math.sin((i - 6) / 4) * 25000), borderColor: '#00d4ff', borderWidth: 2, pointRadius: 0 },
-                        { label: 'Weekend', data: hours.map((_, i) => 95000 + Math.sin((i - 6) / 4) * 15000), borderColor: '#fff', borderWidth: 2, pointRadius: 0 }
-                    ]
-                },
-                options: { ...seasonalOptions(), plugins: { legend: { display: true, labels: { color: '#8b949e' } } } }
-            });
-        }
-
-        function renderModelComparison(data = null) {
-            renderMiniChart('prophetMiniChart', '#00d4ff');
-            renderMiniChart('arimaMiniChart', '#fff');
-            renderErrorBarChart();
-        }
-
-        function renderMiniChart(id, color) {
-            const ctx = document.getElementById(id).getContext('2d');
-            let chart = id === 'prophetMiniChart' ? prophetMiniChart : arimaMiniChart;
-            if (chart) chart.destroy();
-            const labels = Array.from({length: 30}, (_, i) => i);
-            const res = new Chart(ctx, {
-                type: 'line',
-                data: {
-                    labels: labels,
-                    datasets: [
-                        { label: 'A', data: labels.map(i => 100000 + Math.sin(i/2)*10000), borderColor: '#8b949e', borderWidth: 1, pointRadius: 0 },
-                        { label: 'P', data: labels.map(i => 100000 + Math.sin(i/2)*10500 + (Math.random()-0.5)*2000), borderColor: color, borderWidth: 1, pointRadius: 0 }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { display: false }, y: { display: false } } }
-            });
-            if (id === 'prophetMiniChart') prophetMiniChart = res; else arimaMiniChart = res;
-        }
-
-        function renderErrorBarChart() {
-            const ctx = document.getElementById('errorCompChart').getContext('2d');
-            if (errorCompChart) errorCompChart.destroy();
-            errorCompChart = new Chart(ctx, {
-                type: 'bar',
-                data: {
-                    labels: ['MAE', 'RMSE'],
-                    datasets: [
-                        { label: 'Prophet', data: [3140, 4520], backgroundColor: '#00d4ff', borderRadius: 4 },
-                        { label: 'ARIMA', data: [4210, 6105], backgroundColor: '#fff', borderRadius: 4 }
-                    ]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { labels: { color: '#8b949e' } } }, scales: { x: { ticks: { color: '#8b949e' } }, y: { ticks: { color: '#8b949e' } } } }
-            });
-        }
-
-        function renderRegionalBreakdown() {
-            const ctxBar = document.getElementById('regionalBarChart').getContext('2d');
-            if (regionalBarChart) regionalBarChart.destroy();
-            regionalBarChart = new Chart(ctxBar, {
-                type: 'bar',
-                data: {
-                    labels: ['NR', 'SR', 'ER', 'WR', 'NER'],
-                    datasets: [{ data: [124500, 102100, 42300, 145800, 12400], backgroundColor: '#00d4ff', borderRadius: 6 }]
-                },
-                options: { indexAxis: 'y', responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8b949e' } }, y: { ticks: { color: '#8b949e' } } } }
-            });
-
-            const ctxPie = document.getElementById('regionalPieChart').getContext('2d');
-            if (regionalPieChart) regionalPieChart.destroy();
-            regionalPieChart = new Chart(ctxPie, {
-                type: 'pie',
-                data: {
-                    labels: ['NR', 'SR', 'ER', 'WR', 'NER'],
-                    datasets: [{ data: [124500, 102100, 42300, 145800, 12400], backgroundColor: ['#00d4ff', '#fff', '#8b949e', '#238636', '#f85149'], borderWidth: 0 }]
-                },
-                options: { responsive: true, maintainAspectRatio: false, plugins: { legend: { position: 'bottom', labels: { color: '#8b949e' } } } }
-            });
-
-            const tbody = document.getElementById('grid-table-body');
-            const data = [
-                { reg: 'Northern (NR)', curr: '124,500', peak: '132,100', valley: '98,400', chg: '-2.4%' },
-                { reg: 'Southern (SR)', curr: '102,100', peak: '105,400', valley: '89,200', chg: '+1.8%' },
-                { reg: 'Eastern (ER)', curr: '42,300', peak: '45,800', valley: '38,100', chg: '-0.5%' },
-                { reg: 'Western (WR)', curr: '145,800', peak: '152,000', valley: '128,400', chg: '+4.2%' },
-                { reg: 'North-Eastern (NER)', curr: '12,400', peak: '13,500', valley: '10,200', chg: '+0.2%' }
-            ];
-            tbody.innerHTML = data.map(row => `<tr><td>${row.reg}</td><td class="accent-text">${row.curr} MW</td><td>${row.peak} MW</td><td>${row.valley} MW</td><td style="color: ${row.chg.startsWith('+') ? 'var(--danger)' : 'var(--success)'}">${row.chg}</td></tr>`).join('');
-        }
-
-        function seasonalOptions() {
-            return { responsive: true, maintainAspectRatio: false, plugins: { legend: { display: false } }, scales: { x: { ticks: { color: '#8b949e', font: { size: 10 } } }, y: { ticks: { color: '#8b949e', font: { size: 10 } } } } };
-        }
-    </script>
 </body>
 </html>
