@@ -16,4 +16,4 @@ Real-time energy demand forecasting for Indian power grids.
 2. `python backend/app.py`
 
 ## Author
-Aayush — Parul University
+Aayush Kumar
