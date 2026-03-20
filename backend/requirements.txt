@@ -1,0 +1,14 @@
+flask
+gunicorn
+pandas
+numpy
+prophet
+statsmodels
+pmdarima
+scikit-learn
+requests
+beautifulsoup4
+supabase
+joblib
+apscheduler
+python-dotenv
